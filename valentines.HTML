@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Will You Be My Valentine? ❤️</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ff69b4 0%, #ff1493 50%, #ffb6c1 100%);
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 60px 40px;
+      border-radius: 30px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      max-width: 600px;
+      width: 100%;
+    }
+
+    .heart-animation {
+      font-size: 6em;
+      margin-bottom: 30px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #ff1493;
+      margin-bottom: 30px;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .question {
+      font-size: 2em;
+      color: #ff1493;
+      font-weight: bold;
+      margin-bottom: 40px;
+      line-height: 1.5;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 15px 40px;
+      font-size: 1.3em;
+      font-weight: bold;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .yes-btn {
+      background: linear-gradient(135deg, #00b894 0%, #00a383 100%);
+    }
+
+    .yes-btn:hover {
+      background: linear-gradient(135deg, #00d084 0%, #00b894 100%);
+      transform: scale(1.1);
+    }
+
+    .no-btn {
+      background: linear-gradient(135deg, #ff7675 0%, #d63031 100%);
+      position: relative;
+    }
+
+    .no-btn:hover {
+      background: linear-gradient(135deg, #ff8787 0%, #ff7675 100%);
+      transform: scale(1.05);
+    }
+
+    .response-text {
+      font-size: 1.8em;
+      font-weight: bold;
+      margin-top: 30px;
+      min-height: 40px;
+      color: #ff1493;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .success-message {
+      color: #00b894;
+    }
+
+    .teasing-message {
+      color: #d63031;
+    }
+
+    .share-section {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 2px solid #ffb6c1;
+    }
+
+    .share-section h3 {
+      color: #ff1493;
+      margin-bottom: 15px;
+    }
+
+    .share-link {
+      background: #f0f0f0;
+      padding: 12px 20px;
+      border-radius: 10px;
+      color: #333;
+      word-break: break-all;
+      margin-bottom: 15px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .copy-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 10px 25px;
+      font-size: 1em;
+    }
+
+    .copy-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .copy-feedback {
+      margin-top: 10px;
+      color: #00b894;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .copy-feedback.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="heart-animation">❤️</div>
+    <h1>Will You Be My Valentine?</h1>
+    <div class="question">will you be my valentines?</div>
+    
+    <div class="button-container">
+      <button class="yes-btn" onclick="yesClicked()">Yes 💚</button>
+      <button class="no-btn" id="noBtn" onclick="noClicked()">No 💔</button>
+    </div>
+
+    <div class="response-text" id="response"></div>
+
+    <div class="share-section">
+      <h3>💌 Share with your friends:</h3>
+      <div class="share-link" id="shareLink"></div>
+      <button class="copy-btn" onclick="copyLink()">Copy Link 📋</button>
+      <div class="copy-feedback" id="feedback">Link copied to clipboard!</div>
+    </div>
+  </div>
+
+  <script>
+    let noClickCount = 0;
+    const noBtn = document.getElementById('noBtn');
+    const response = document.getElementById('response');
+    const shareLink = document.getElementById('shareLink');
+    const feedback = document.getElementById('feedback');
+
+    // Generate shareable link (current page URL)
+    const currentUrl = window.location.href;
+    shareLink.textContent = currentUrl;
+
+    function yesClicked() {
+      response.innerHTML = '<span class="success-message">yes iloveyou langga:) 💕</span>';
+      response.style.animation = 'none';
+      setTimeout(() => {
+        response.style.animation = 'fadeIn 0.5s ease';
+      }, 10);
+      noBtn.disabled = false;
+      noBtn.style.transform = 'scale(1)';
+      noClickCount = 0;
+    }
+
+    function noClicked() {
+      noClickCount++;
+      response.innerHTML = '<span class="teasing-message">kanang ka maldita jd ba 😂</span>';
+      
+      // Increase size of No button
+      const newScale = 1 + (noClickCount * 0.15);
+      noBtn.style.transform = `scale(${newScale})`;
+      
+      // Move the button away slightly if it gets too big
+      if (noClickCount > 5) {
+        const randomX = (Math.random() - 0.5) * 100;
+        const randomY = (Math.random() - 0.5) * 100;
+        noBtn.style.transform = `scale(${newScale}) translate(${randomX}px, ${randomY}px)`;
+      }
+
+      response.style.animation = 'none';
+      setTimeout(() => {
+        response.style.animation = 'fadeIn 0.5s ease';
+      }, 10);
+    }
+
+    function copyLink() {
+      navigator.clipboard.writeText(currentUrl).then(() => {
+        feedback.classList.add('show');
+        setTimeout(() => {
+          feedback.classList.remove('show');
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
